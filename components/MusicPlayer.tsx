@@ -21,19 +21,19 @@ const TRACKS: Track[] = [
     title: "春泥棒",
     artist: "Yorushika",
     cover: "https://p2.bahamut.com.tw/HOME/creationCover/82/0006016482.JPG?w=180",
-    audioUrl: "/Music/spring_thief.mp3"
+    audioUrl: "/Music/spring-thief.mp3"
   },
   {
     title: "八月、某、月明かり",
     artist: "Yorushika",
     cover: "https://p2.music.126.net/AVhYLte6khAcd3wOO65avw==/109951170245162530.jpg?imageView&thumbnail=360y360&quality=75&tostatic=0",
-    audioUrl: "/Music/moonlight.mp3"
+    audioUrl: "/Music/yorushika-august-moonlight.mp3"
   },
   {
     title: "夏、バス停、君を待つ",
     artist: "Yorushika",
     cover: "https://blog-imgs-119.fc2.com/a/l/i/alicepika/yorushikamakeinu.jpg",
-    audioUrl: "/Music/bustop.mp3"
+    audioUrl: "/Music/summer-bus-stop-yorushika.mp3"
   }
 ];
 
