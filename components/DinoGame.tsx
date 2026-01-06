@@ -275,7 +275,7 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     : "w-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-3xl p-3 sm:p-4 shadow-sm overflow-hidden relative cursor-pointer select-none";
 
   const canvasWidth = isMobile ? 360 : 800;
-  const canvasHeight = isMobile ? 200 : 200;
+  const canvasHeight = isMobile ? 180 : 200;
 
   return (
     <div 
