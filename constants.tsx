@@ -4,7 +4,7 @@ import { ProjectCard, Skill, TimelineEvent } from './types';
 
 export const SITE_ASSETS = {
   mascot: 'https://pngimg.com/d/cat_PNG50480.png',
-  avatar: 'public/icon/cat.jpg',
+  avatar: '/icon/cat.jpg',
   chatBackground: '#', // Set a custom background image URL for the AI Chat panel
   entranceBackgrounds: [
     'https://images.unsplash.com/photo-1548247416-ec66f4900b2e?q=80&w=1600&auto=format&fit=crop',
@@ -61,7 +61,7 @@ export const GALLERY_IMAGES = [
   { url: '/gallery/japan.jpg', title: 'Grad trip to Japan' },
   { url: '/gallery/cq.jpg', title: 'The last day of 2023, @Chong Qing' },
   { url: '/gallery/2024.jpg', title: 'Sunset of year 2024, @Phu Quoc Island' },
-  { url: '/gallery/rose.jpg', title: 'With my love' },
+  { url: '/gallery/rb.jpg', title: 'With my love' },
   { url: '/gallery/2025.jpg', title: 'The last day of 2025, @Yibin' },
 ];
 
