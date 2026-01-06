@@ -45,9 +45,11 @@ const MusicPlayer: React.FC = () => {
   const [volume, setVolume] = useState(0.35);
   const [isMuted, setIsMuted] = useState(false);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+  const [isSeeking, setIsSeeking] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef<boolean>(false);
   
   const track = TRACKS[currentTrackIdx];
 
@@ -75,7 +77,7 @@ const MusicPlayer: React.FC = () => {
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [currentTrackIdx, track.audioUrl, volume, isMuted]);
+  }, [currentTrackIdx, track.audioUrl]);
 
   // Handle Play/Pause
   useEffect(() => {
@@ -97,7 +99,21 @@ const MusicPlayer: React.FC = () => {
   }, [volume, isMuted]);
 
   const togglePlay = () => setIsPlaying(!isPlaying);
-  const toggleMute = () => setIsMuted(!isMuted);
+  const toggleMute = () => {
+    const newMuted = !isMuted;
+    setIsMuted(newMuted);
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    // Only toggle the muted state — do not change position
+    audio.muted = newMuted;
+
+    // If unmuting and track was supposed to be playing, ensure playback resumes
+    if (!newMuted && isPlaying && audio.paused) {
+      audio.play().catch(e => console.log("Playback blocked:", e));
+    }
+  };
 
   const nextTrack = () => {
     const nextIdx = (currentTrackIdx + 1) % TRACKS.length;
@@ -123,6 +139,59 @@ const MusicPlayer: React.FC = () => {
       audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
     }
+  };
+
+  const seekFromClientX = (clientX: number) => {
+    if (!progressBarRef.current || !audioRef.current || !duration) return;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+    const percentage = x / rect.width;
+    const newTime = percentage * duration;
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  const handleProgressMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    setIsSeeking(true);
+    isDraggingRef.current = true;
+    seekFromClientX(e.clientX);
+
+    const onMove = (ev: MouseEvent) => {
+      if (!isDraggingRef.current) return;
+      seekFromClientX(ev.clientX);
+    };
+    const onUp = () => {
+      isDraggingRef.current = false;
+      setIsSeeking(false);
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  };
+
+  const handleProgressTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsSeeking(true);
+    isDraggingRef.current = true;
+    const touch = e.touches[0];
+    seekFromClientX(touch.clientX);
+
+    const onTouchMove = (ev: TouchEvent) => {
+      if (!isDraggingRef.current) return;
+      const t = ev.touches[0];
+      if (t) seekFromClientX(t.clientX);
+    };
+    const onTouchEnd = () => {
+      isDraggingRef.current = false;
+      setIsSeeking(false);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onTouchEnd);
+      document.removeEventListener('touchcancel', onTouchEnd);
+    };
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchend', onTouchEnd);
+    document.addEventListener('touchcancel', onTouchEnd);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,15 +238,19 @@ const MusicPlayer: React.FC = () => {
         <div 
           ref={progressBarRef}
           onClick={handleProgressClick}
-          className="relative h-2 w-full bg-gray-200 dark:bg-slate-700/50 rounded-full cursor-pointer group"
+          onMouseDown={handleProgressMouseDown}
+          onTouchStart={handleProgressTouchStart}
+          className="relative h-2 w-full bg-gray-200 dark:bg-slate-700/50 rounded-full cursor-pointer"
         >
           <div 
             className="absolute left-0 top-0 h-full bg-blue-500 rounded-full transition-all duration-100" 
             style={{ width: `${progressPercent}%` }} 
           />
           <div 
-            className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-2 border-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-2 border-blue-500 rounded-full shadow"
             style={{ left: `calc(${progressPercent}% - 6px)` }}
+            onMouseDown={handleProgressMouseDown}
+            onTouchStart={handleProgressTouchStart}
           />
         </div>
 
