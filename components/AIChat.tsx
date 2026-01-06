@@ -12,6 +12,8 @@ const SUGGESTIONS = [
   "Tell me a cat joke!"
 ];
 
+const apiKey = import.meta.env.VITE_API_KEY;
+
 interface AIChatProps {
   transparent?: boolean;
 }
@@ -26,7 +28,7 @@ const AIChat: React.FC<AIChatProps> = ({ transparent = false }) => {
 
   // Initialize - Check API Key
   useEffect(() => {
-    if (process.env.API_KEY) {
+    if (apiKey) {
       setIsInitialized(true);
     }
   }, []);
@@ -64,11 +66,15 @@ const AIChat: React.FC<AIChatProps> = ({ transparent = false }) => {
         }))
       ];
 
+      if (!apiKey) {
+        throw new Error('API key missing');
+      }
+
       const response = await fetch("https://api.deepseek.com/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${'sk-18abe6a5fc1447aca5a48d5089fda230'}`
+          "Authorization": `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           model: "deepseek-chat",
