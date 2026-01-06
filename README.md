@@ -167,9 +167,6 @@ TRAVELLED_COUNTRIES: [
 |----------|----------|-------------|
 | `DEEPSEEK_API_KEY` | Yes | DeepSeek API key for AI chat |
 
-## 📄 License
-
-This project is open source and available under the MIT License.
 
 ## 👨‍💻 Author
 
