@@ -68,7 +68,7 @@ const AIChat: React.FC<AIChatProps> = ({ transparent = false }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${'sk-59781a76310c4f8f87608b2a2cf281a8'}`
+          "Authorization": `Bearer ${'YOUR_API_KEY HERE'}`
         },
         body: JSON.stringify({
           model: "deepseek-chat",
