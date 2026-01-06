@@ -65,7 +65,7 @@ const App: React.FC = () => {
           <section className="space-y-6">
             <div className="flex justify-between items-start gap-4">
               <div className="space-y-4 flex-1">
-                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-zilla font-bold text-gray-900 dark:text-gray-100 tracking-tight leading-none break-words">
+                 <h1 className="text-4xl sm:text-6xl md:text-7xl font-zilla font-bold text-gray-900 dark:text-gray-100 tracking-tight leading-none break-words">
                    Hello  I'm <span className="text-gray-300 dark:text-gray-600">SHIRO</span><span className="text-blue-500">NEKO</span>
                  </h1>
               </div>
@@ -84,7 +84,7 @@ const App: React.FC = () => {
               <div className="flex flex-wrap items-center gap-2 text-base sm:text-lg font-bold text-gray-700 dark:text-gray-300">
                 <span className="text-blue-600 dark:text-blue-400">Year 3 AI student (double majoring Finance)</span> <span className="text-gray-400 font-normal mx-1">@</span> <span className="text-green-500 dark:text-green-400">HKU</span>
               </div>
-              <p className="text-2xl sm:text-3xl md:text-4xl font-zilla font-bold italic text-gray-800 dark:text-gray-200 leading-relaxed tracking-wide opacity-90">
+              <p className="text-xl sm:text-3xl md:text-4xl font-zilla font-bold italic text-gray-800 dark:text-gray-200 leading-relaxed tracking-wide opacity-90">
                 Welcome to my page ꜀(^. .^꜀ )꜆੭ 
               </p>
 
