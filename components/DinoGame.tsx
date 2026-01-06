@@ -127,6 +127,8 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isPlaying, isGameOver]);
 
+  const getCanvasWidth = () => canvasRef.current?.width ?? (isMobile ? 360 : 800);
+
   const update = (time: number) => {
     if (!isPlaying || isGameOver) return;
 
@@ -152,7 +154,7 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     if (time - gameState.current.lastObstacleTime > 1200 + Math.random() * 800) {
       const size = 25 + Math.random() * 15;
       gameState.current.obstacles.push({
-        x: 800,
+        x: getCanvasWidth() + 20,
         width: size,
         height: size,
         color: OBSTACLE_COLORS[Math.floor(Math.random() * OBSTACLE_COLORS.length)]
@@ -272,9 +274,13 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     ? "w-full rounded-2xl overflow-hidden relative cursor-pointer select-none border border-gray-100 dark:border-slate-700/50"
     : "w-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-3xl p-3 sm:p-4 shadow-sm overflow-hidden relative cursor-pointer select-none";
 
+  const canvasWidth = isMobile ? 360 : 800;
+  const canvasHeight = isMobile ? 180 : 200;
+
   return (
     <div 
       className={containerClasses}
+      style={{ touchAction: 'manipulation' }}
       onClick={() => {
         if (!isPlaying && !isGameOver) setIsPlaying(true);
         else if (isGameOver) resetGame();
@@ -287,24 +293,24 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
       </div>
 
       {!isPlaying && !isGameOver && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/20 dark:bg-black/20 z-10 p-4">
-          <div className="text-center">
-            <p className="text-gray-800 dark:text-gray-200 font-bold text-lg sm:text-xl mb-1 drop-shadow-sm uppercase">MEOW! {isMobile ? 'TAP' : 'SPACE'} TO START</p>
-            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium">Help the kitten jump over the yarn balls!</p>
+        <div className="absolute inset-0 flex items-center justify-center bg-white/20 dark:bg-black/20 z-10 p-3 sm:p-4">
+          <div className="text-center max-w-[90vw]">
+            <p className="text-gray-800 dark:text-gray-200 font-bold text-base sm:text-xl mb-1 drop-shadow-sm uppercase">MEOW! {isMobile ? 'TAP' : 'SPACE'} TO START</p>
+            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium leading-snug">Help the kitten jump over the yarn balls!</p>
           </div>
         </div>
       )}
 
       {isGameOver && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/40 dark:bg-black/40 z-30 p-4">
-          <div className="text-center bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 animate-in zoom-in duration-300 min-w-[200px]">
-            <p className="text-red-500 font-black text-2xl mb-1 italic tracking-tighter">O O P S !</p>
+        <div className="absolute inset-0 flex items-center justify-center bg-white/40 dark:bg-black/40 z-30 p-3 sm:p-4">
+          <div className="text-center bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 animate-in zoom-in duration-300 w-[90%] max-w-[320px]">
+            <p className="text-red-500 font-black text-xl sm:text-2xl mb-1 italic tracking-tighter">O O P S !</p>
             <div className="mb-4">
               <p className="text-gray-600 dark:text-gray-300 text-xs font-bold">Kitten got tangled!</p>
-              <p className="text-blue-500 font-bold text-base">Score: {scoreDisplay}</p>
+              <p className="text-blue-500 font-bold text-sm sm:text-base">Score: {scoreDisplay}</p>
             </div>
             <button 
-              className="px-6 py-2 bg-blue-500 text-white rounded-xl font-bold text-xs hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 active:scale-95"
+              className="px-5 sm:px-6 py-2 bg-blue-500 text-white rounded-xl font-bold text-xs hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 active:scale-95 w-full sm:w-auto"
               onClick={(e) => {
                 e.stopPropagation();
                 resetGame();
@@ -318,8 +324,8 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
 
       <canvas 
         ref={canvasRef} 
-        width={800} 
-        height={200} // Reduced height
+        width={canvasWidth} 
+        height={canvasHeight}
         className="w-full h-auto block"
       />
       
