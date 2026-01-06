@@ -25,7 +25,7 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     dinoVelocity: 0,
     obstacles: [] as { x: number; width: number; height: number; color: string }[],
     groundX: 0,
-    speed: 25, // Increased initial speed from 5 to 20
+    speed: isMobile ? 15 : 25, // Slower initial speed on mobile
     lastObstacleTime: 0,
     currentScore: 0,
   });
