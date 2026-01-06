@@ -24,6 +24,9 @@ const TravelMap: React.FC = () => {
   const lastMousePos = useRef<{ x: number; y: number } | null>(null);
   const requestRef = useRef<number>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const activePointers = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const pinchDistanceRef = useRef<number | null>(null);
+  const baseScaleRef = useRef<number>(scale);
 
   const CURRENT_LOCATION_ID = 'HK';
 
@@ -151,6 +154,70 @@ const TravelMap: React.FC = () => {
     lastMousePos.current = null;
   };
 
+  const updatePointerPosition = (e: React.PointerEvent) => {
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  };
+
+  const pointerDistance = (p1: { x: number; y: number }, p2: { x: number; y: number }) => {
+    return Math.hypot(p2.x - p1.x, p2.y - p1.y);
+  };
+
+  const getActivePoints = (): Array<{ x: number; y: number }> => {
+    return Array.from(activePointers.current.values());
+  };
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    e.preventDefault();
+    mapContainerRef.current?.setPointerCapture?.(e.pointerId);
+    updatePointerPosition(e);
+
+    if (activePointers.current.size === 1) {
+      setIsDragging(true);
+      lastMousePos.current = { x: e.clientX, y: e.clientY };
+    } else if (activePointers.current.size === 2) {
+      const points = getActivePoints();
+      pinchDistanceRef.current = pointerDistance(points[0], points[1]);
+      baseScaleRef.current = scale;
+      setIsDragging(false);
+    }
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!mapContainerRef.current) return;
+    updatePointerPosition(e);
+
+    // Two-finger pinch to zoom
+    if (activePointers.current.size === 2 && pinchDistanceRef.current) {
+      const points = getActivePoints();
+      const newDistance = pointerDistance(points[0], points[1]);
+      const ratio = newDistance / pinchDistanceRef.current;
+      const minScale = 100;
+      const maxScale = 1000;
+      setScale(Math.max(minScale, Math.min(maxScale, baseScaleRef.current * ratio)));
+      return;
+    }
+
+    // Single finger drag to rotate
+    if (activePointers.current.size === 1 && isDragging && lastMousePos.current) {
+      const dx = e.clientX - lastMousePos.current.x;
+      const dy = e.clientY - lastMousePos.current.y;
+      const sensitivity = 0.5;
+      setRotation(prev => [prev[0] + dx * sensitivity, Math.max(-85, Math.min(85, prev[1] - dy * sensitivity))]);
+      lastMousePos.current = { x: e.clientX, y: e.clientY };
+    }
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    activePointers.current.delete(e.pointerId);
+    if (activePointers.current.size < 2) {
+      pinchDistanceRef.current = null;
+    }
+    if (activePointers.current.size === 0) {
+      setIsDragging(false);
+      lastMousePos.current = null;
+    }
+  };
+
   // Visibility check for pins (backface culling)
   const isVisible = (lng: number, lat: number) => {
      const center = projection.invert?.([width/2, height/2]);
@@ -180,6 +247,11 @@ const TravelMap: React.FC = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        style={{ touchAction: 'none' }}
       >
         {isLoading ? (
           <div className="flex flex-col items-center gap-2 text-blue-400">
