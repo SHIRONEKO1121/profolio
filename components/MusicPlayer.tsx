@@ -54,10 +54,11 @@ const MusicPlayer: React.FC = () => {
   // Initialize Audio
   useEffect(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio(track.audioUrl);
+      audioRef.current = new Audio();
     }
 
     const audio = audioRef.current;
+    audio.src = track.audioUrl;
     audio.volume = volume;
     audio.muted = isMuted;
 
@@ -74,7 +75,7 @@ const MusicPlayer: React.FC = () => {
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [currentTrackIdx]);
+  }, [currentTrackIdx, track.audioUrl, volume, isMuted]);
 
   // Handle Play/Pause
   useEffect(() => {
@@ -101,17 +102,15 @@ const MusicPlayer: React.FC = () => {
   const nextTrack = () => {
     const nextIdx = (currentTrackIdx + 1) % TRACKS.length;
     setCurrentTrackIdx(nextIdx);
-    if (audioRef.current) {
-      audioRef.current.src = TRACKS[nextIdx].audioUrl;
-    }
+    setCurrentTime(0);
+    setDuration(0);
   };
 
   const prevTrack = () => {
     const prevIdx = (currentTrackIdx - 1 + TRACKS.length) % TRACKS.length;
     setCurrentTrackIdx(prevIdx);
-    if (audioRef.current) {
-      audioRef.current.src = TRACKS[prevIdx].audioUrl;
-    }
+    setCurrentTime(0);
+    setDuration(0);
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
