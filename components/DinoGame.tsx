@@ -76,7 +76,7 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
       dinoVelocity: 0,
       obstacles: [],
       groundX: 0,
-      speed: 20, // Increased initial speed from 5 to 20
+      speed: isMobile ? 15 : 20, // Slower initial speed on mobile
       lastObstacleTime: 0,
       currentScore: 0,
     };
@@ -275,7 +275,7 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     : "w-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-3xl p-3 sm:p-4 shadow-sm overflow-hidden relative cursor-pointer select-none";
 
   const canvasWidth = isMobile ? 360 : 800;
-  const canvasHeight = isMobile ? 190 : 200;
+  const canvasHeight = isMobile ? 180 : 200;
 
   return (
     <div 
@@ -303,11 +303,11 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
 
       {isGameOver && (
         <div className="absolute inset-0 flex items-center justify-center bg-white/40 dark:bg-black/40 z-30 p-3 sm:p-4">
-          <div className="text-center bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 animate-in zoom-in duration-300 w-[90%] max-w-[320px]">
-            <p className="text-red-500 font-black text-xl sm:text-2xl mb-1 italic tracking-tighter">O O P S !</p>
-            <div className="mb-4">
-              <p className="text-gray-600 dark:text-gray-300 text-xs font-bold">Kitten got tangled!</p>
-              <p className="text-blue-500 font-bold text-sm sm:text-base">Score: {scoreDisplay}</p>
+          <div className="text-center bg-white dark:bg-slate-900 p-3 sm:p-5 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 animate-in zoom-in duration-300 w-[90%] max-w-[320px]">
+            <p className="text-red-500 font-black text-lg sm:text-2xl mb-1 italic tracking-tighter">O O P S !</p>
+            <div className="mb-3 sm:mb-4">
+              <p className="text-gray-600 dark:text-gray-300 text-[10px] sm:text-xs font-bold">Kitten got tangled!</p>
+              <p className="text-blue-500 font-bold text-xs sm:text-base">Score: {scoreDisplay}</p>
             </div>
             <button 
               className="px-5 sm:px-6 py-2 bg-blue-500 text-white rounded-xl font-bold text-xs hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 active:scale-95 w-full sm:w-auto"
