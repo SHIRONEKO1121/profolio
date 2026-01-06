@@ -91,25 +91,6 @@ npm run build
 
 This creates a `dist/` folder with optimized production files ready for deployment.
 
-## 🌐 Deploy to Vercel
-
-### Option 1: Automatic Deployment (Recommended)
-
-1. Push your code to GitHub
-2. Visit [vercel.com](https://vercel.com)
-3. Sign in with GitHub account
-4. Click "Add New" → "Project"
-5. Select your `profolio` repository
-6. Vercel automatically detects the configuration
-7. Click "Deploy"
-8. Your site is live! 🎉
-
-### Option 2: Manual Deployment
-
-Upload the `dist/` folder to your hosting provider:
-- Virtual host (shared hosting)
-- Cloud server (AWS, Aliyun, Tencent Cloud, etc.)
-- Any static file hosting service
 
 ## 🔧 Configuration
 
