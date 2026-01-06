@@ -49,7 +49,7 @@ npm install
 Create a `.env.local` file in the root directory:
 
 ```env
-GEMINI_API_KEY=your_deepseek_api_key_here
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
 ```
 
 ### 4. Run the development server
@@ -184,7 +184,7 @@ TRAVELLED_COUNTRIES: [
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GEMINI_API_KEY` | Yes | DeepSeek API key for AI chat |
+| `DEEPSEEK_API_KEY` | Yes | DeepSeek API key for AI chat |
 
 ## 📄 License
 
