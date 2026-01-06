@@ -165,7 +165,7 @@ const EnterPage: React.FC<EnterPageProps> = ({ onEnter }) => {
           }}
         >
           <span className="relative z-10 flex items-center gap-2">
-            I'm feeling lucky
+            Dreaming
           </span>
           
           {/* Subtle Glow blooming from behind the button */}
