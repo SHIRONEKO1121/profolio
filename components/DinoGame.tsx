@@ -77,7 +77,8 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
       obstacles: [],
       groundX: 0,
       speed: isMobile ? 15 : 20, // Slower initial speed on mobile
-      lastObstacleTime: 0,
+      // Set baseline to now so first-ball delay is from game start
+      lastObstacleTime: performance.now(),
       currentScore: 0,
     };
     setScoreDisplay(0);
@@ -152,7 +153,7 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     // Spawn Obstacles (Wool balls)
     // Reduce randomness slightly to make it more consistent at high speeds
     const isFirstBall = gameState.current.lastObstacleTime === 0;
-    const spawnDelay = isFirstBall && isMobile ? 3000 : 2500;
+    const spawnDelay = isFirstBall && isMobile ? 2000 : 1200;
     if (time - gameState.current.lastObstacleTime > spawnDelay + Math.random() * 800) {
       const size = 25 + Math.random() * 15;
       gameState.current.obstacles.push({
@@ -265,6 +266,10 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
   useEffect(() => {
     if (isPlaying && !isGameOver) {
       lastTimeRef.current = performance.now();
+      // If this is the first start, initialize obstacle timer to now
+      if (gameState.current.lastObstacleTime === 0) {
+        gameState.current.lastObstacleTime = lastTimeRef.current;
+      }
       requestRef.current = requestAnimationFrame(update);
     }
     return () => {
