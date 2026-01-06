@@ -12,6 +12,7 @@
 - 🌙 **Dark Mode** - Automatic dark mode (7 PM - 6 AM)
 - 📱 **Responsive Design** - Mobile-first, works on all devices
 - ⚡ **Fast Performance** - Vite bundler for optimized builds
+- **More Coming...**
 
 ## 🛠️ Tech Stack
 
