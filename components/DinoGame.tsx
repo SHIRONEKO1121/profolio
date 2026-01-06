@@ -152,7 +152,7 @@ const DinoGame: React.FC<DinoGameProps> = ({ transparent = false }) => {
     // Spawn Obstacles (Wool balls)
     // Reduce randomness slightly to make it more consistent at high speeds
     const isFirstBall = gameState.current.lastObstacleTime === 0;
-    const spawnDelay = isFirstBall && isMobile ? 2000 : 1200;
+    const spawnDelay = isFirstBall && isMobile ? 3000 : 2500;
     if (time - gameState.current.lastObstacleTime > spawnDelay + Math.random() * 800) {
       const size = 25 + Math.random() * 15;
       gameState.current.obstacles.push({
