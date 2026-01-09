@@ -61,7 +61,7 @@ export const GALLERY_IMAGES = [
   { url: '/gallery/japan.jpg', title: 'Grad trip to Japan' },
   { url: '/gallery/cq.jpg', title: 'The last day of 2023, @Chong Qing' },
   { url: '/gallery/2024.jpg', title: 'Sunset of year 2024, @Phu Quoc Island' },
-  { url: '/gallery/rb.jpg', title: 'With my love' },
+  { url: '/gallery/rose.jpg', title: 'With my love' },
   { url: '/gallery/2025.jpg', title: 'The last day of 2025, @Yibin' },
 ];
 
