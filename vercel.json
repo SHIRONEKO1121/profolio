@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/archive/:match*",
+      "destination": "https://your-archive-project-url.vercel.app/:match*"
+    }
+  ]
+}
