@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/archive/:match*",
-      "destination": "https://your-archive-project-url.vercel.app/:match*"
+      "source": "/archive",
+      "destination": "https://shironeko-archive.vercel.app"
+    },
+    {
+      "source": "/archive/:path*",
+      "destination": "https://shironeko-archive.vercel.app/:path*"
     }
   ]
 }
