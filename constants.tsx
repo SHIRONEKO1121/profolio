@@ -16,26 +16,26 @@ export const SITE_ASSETS = {
 
 export const SITES: ProjectCard[] = [
   {
-    title: 'Blog',
+    title: 'Writings',
     description: 'Daily thoughts',
     icon: '/icon/135.ico',
-    link: '#'
+    link: 'https://archive.shironeko.site/'
   },
   {
     title: 'Gallery',
-    description: 'Personal works',
+    description: 'Memories',
     icon: '/icon/120.ico',
     link: '#'
   },
   {
-    title: 'Writings',
-    description: 'coming soon~',
+    title: 'Music',
+    description: 'Musics I love (building)',
     icon: '/icon/112.ico',
     link: '#'
   },
   {
-    title: 'Demo',
-    description: 'Component tests',
+    title: 'DSE database (building)',
+    description: 'For my students',
     icon: '/icon/113.ico',
     link: '#' 
   }
@@ -46,10 +46,16 @@ export const PROJECTS: ProjectCard[] = [
     title: 'SHIRONEKO homepage',
     description: 'This exact website source code.',
     icon: '/icon/125.ico',
-    link: '#'
+    link: 'https://github.com/SHIRONEKO1121/profolio'
   },
   {
     title: 'Trip planner',
+    description: 'developing...',
+    icon: '/icon/forest.png',
+    link: '#'
+  },
+  {
+    title: 'Vibe player',
     description: 'developing...',
     icon: '/icon/air.png',
     link: '#'
