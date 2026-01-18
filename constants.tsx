@@ -51,13 +51,13 @@ export const PROJECTS: ProjectCard[] = [
   {
     title: 'Trip planner',
     description: 'developing...',
-    icon: '/icon/forest.png',
+    icon: '/icon/air.png',
     link: '#'
   },
   {
     title: 'Vibe player',
     description: 'developing...',
-    icon: '/icon/air.png',
+    icon: '/icon/forest.png',
     link: '#'
   }
 ];
