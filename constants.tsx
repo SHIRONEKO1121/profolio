@@ -25,7 +25,7 @@ export const SITES: ProjectCard[] = [
     title: 'Gallery',
     description: 'Memories',
     icon: '/icon/120.ico',
-    link: '#'
+    link: '#https://album.shironeko.site/'
   },
   {
     title: 'Music',
